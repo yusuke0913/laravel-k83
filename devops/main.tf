@@ -24,6 +24,10 @@ module "vpc" {
     Environment = "${var.env}"
   }
 
+  private_subnet_tags = {
+    Tier = "Private"
+  }
+
   vpc_tags = {
     Name = "${var.app_name}-vpc"
   }
