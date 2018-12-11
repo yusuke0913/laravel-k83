@@ -41,3 +41,7 @@ variable "public_subnet_3_cidr" {
 variable "eks_cluster_name" {
   default = "laravel-k83-eks-cluster"
 }
+
+variable "env_dir" {
+  default = "./.env"
+}

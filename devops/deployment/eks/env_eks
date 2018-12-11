@@ -1,2 +1,0 @@
-
-export KUBECONFIG=~/.kube/config-${PROJ_NAME}.yaml

@@ -21,3 +21,5 @@ resource "local_file" "config_map_aws_auth" {
   content  = "${module.eks.config_map_aws_auth}"
   filename = "./deployment/eks/aws-auth/config_map_aws_auth_${var.app_name}.yaml"
 }
+
+
