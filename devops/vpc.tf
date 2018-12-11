@@ -26,10 +26,12 @@ module "vpc" {
   private_subnet_tags = {
     Tier                                            = "Private"
     "kubernetes.io/cluster/${var.eks_cluster_name}" = "shared"
+    "kubernetes.io/role/internal-elb"               = "1"
   }
 
   public_subnet_tags = {
-    Tier = "public"
+    Tier                                            = "public"
+    "kubernetes.io/cluster/${var.eks_cluster_name}" = "shared"
   }
 
   vpc_tags = {
