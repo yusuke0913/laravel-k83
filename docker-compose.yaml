@@ -7,7 +7,6 @@ services:
     container_name: php
     volumes:
       - php-fpm-socket-volume:/var/run
-      - app-source-volume:/var/www/html
 
     # links:
     #   - db
@@ -24,7 +23,6 @@ services:
       - "8080:80"
     volumes:
       - php-fpm-socket-volume:/var/run
-      - app-source-volume:/var/www/html
 
   # db:
   #   image: mysql:5.7
@@ -40,5 +38,4 @@ services:
   #     - "3306:3306"
 
 volumes:
-  ? app-source-volume
   ? php-fpm-socket-volume
