@@ -7,7 +7,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - php:/var/www/html
+      - php-fpm-socket:/var/run
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
 
   php:
@@ -15,8 +15,9 @@ services:
       context: ./php
     container_name: php
     volumes:
-      - php:/var/www/html
       - ../proj:/var/www/html
+      - php-fpm-socket:/var/run
+      - ./php/zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf
     links:
       - db
     environment:
@@ -37,4 +38,5 @@ services:
       - "3306:3306"
 
 volumes:
-  ? php
+  ? www-data
+  ? php-fpm-socket

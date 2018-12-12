@@ -30,7 +30,7 @@ module "vpc" {
   }
 
   public_subnet_tags = {
-    Tier                                            = "public"
+    Tier                                            = "Public"
     "kubernetes.io/cluster/${var.eks_cluster_name}" = "shared"
   }
 
