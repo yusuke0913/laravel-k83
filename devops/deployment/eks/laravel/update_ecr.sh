@@ -5,7 +5,6 @@ echo "deploying..."
 . ../../../.env/env_main
 . ../../../.env/env_ecr
 
-
 # docker login
 $(aws ecr get-login --no-include-email)
 
@@ -22,9 +21,4 @@ do
 		docker tag ${IMG}:latest ${REPO_URL}:latest
 		docker push ${REPO_URL}:latest
 done
-
-
-
-
-
 

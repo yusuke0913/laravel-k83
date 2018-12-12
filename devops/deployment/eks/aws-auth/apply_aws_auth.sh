@@ -1,7 +1,6 @@
 #!/bin/bash
 
 . ../../../.env/env_main
-. ../../../.env/env_ecr
 
 kubectl describe configmap -n kube-system aws-auth
 

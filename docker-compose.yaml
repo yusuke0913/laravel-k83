@@ -1,5 +1,20 @@
 version: "3"
 services:
+  php:
+    build:
+      context: ./
+      dockerfile: Dockerfile.php
+    container_name: php
+    volumes:
+      - php-fpm-socket-volume:/var/run
+      - app-source-volume:/var/www/html
+
+    # links:
+    #   - db
+    environment:
+      - "DB_PORT=3306"
+      - "DB_HOST=db"
+
   nginx:
     build:
       context: ./
@@ -8,20 +23,8 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - php-fpm-socket:/var/run
-
-  php:
-    build:
-      context: ./
-      dockerfile: Dockerfile.php
-    container_name: php
-    volumes:
-      - php-fpm-socket:/var/run
-    # links:
-    #   - db
-    environment:
-      - "DB_PORT=3306"
-      - "DB_HOST=db"
+      - php-fpm-socket-volume:/var/run
+      - app-source-volume:/var/www/html
 
   # db:
   #   image: mysql:5.7
@@ -37,4 +40,5 @@ services:
   #     - "3306:3306"
 
 volumes:
-  ? php-fpm-socket
+  ? app-source-volume
+  ? php-fpm-socket-volume
