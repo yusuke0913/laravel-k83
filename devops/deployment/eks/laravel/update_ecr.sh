@@ -2,8 +2,8 @@
 
 echo "deploying..."
 
-. ../../../env_main
-. ../../../env_ecr
+. ../../../.env/env_main
+. ../../../.env/env_ecr
 
 
 # docker login
@@ -15,7 +15,7 @@ do
 		TARGET_UPPER_CASE=`echo $TARGET | awk '{print toupper($0)}'`
 		REPO_URL_VAR_NAME="ECR_REPOSITORY_${TARGET_UPPER_CASE}_URL"
 		REPO_URL=`echo ${!REPO_URL_VAR_NAME}`
-		IMG="${PROJ_NAME}_${TARGET}"
+		IMG="${APP_NAME}_${TARGET}"
 		echo $IMG $REPO_URL
 		
 		# docker tag

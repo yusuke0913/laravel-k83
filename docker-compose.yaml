@@ -1,0 +1,40 @@
+version: "3"
+services:
+  nginx:
+    build:
+      context: ./
+      dockerfile: Dockerfile.nginx
+    container_name: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - php-fpm-socket:/var/run
+
+  php:
+    build:
+      context: ./
+      dockerfile: Dockerfile.php
+    container_name: php
+    volumes:
+      - php-fpm-socket:/var/run
+    # links:
+    #   - db
+    environment:
+      - "DB_PORT=3306"
+      - "DB_HOST=db"
+
+  # db:
+  #   image: mysql:5.7
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: crud
+  #     MYSQL_DATABASE: crud
+  #     MYSQL_USER: crud
+  #     MYSQL_PASSWORD: crud
+  #   container_name: db
+  #   volumes:
+  #     - ./db_data:/var/lib/mysql
+  #   ports:
+  #     - "3306:3306"
+
+volumes:
+  ? php-fpm-socket

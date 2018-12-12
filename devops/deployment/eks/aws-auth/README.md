@@ -7,5 +7,5 @@
 
 kubeconfig file is put inside the .kube dir. Please put the config into your local ~/.kube directory.
 ```
-export KUBECONFIG=$KUBECONFIG:~/.kube/config-${PROJ_NAME}
+export KUBECONFIG=$KUBECONFIG:~/.kube/config-${APP_NAME}
 ```

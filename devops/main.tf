@@ -5,7 +5,7 @@ provider "aws" {
 
 locals {
   env_main = <<ENV
-  APP_NAME=${var.app_name}
+APP_NAME=${var.app_name}
   ENV
 }
 

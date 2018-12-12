@@ -1,0 +1,49 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: laravel
+  labels:
+    app: laravel
+spec:
+  selector:
+    matchLabels:
+      app: laravel
+      tier: frontend
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: laravel
+        tier: frontend
+    spec:
+      volumes:
+        - name: nginx-default-conf-volume
+          configMap:
+            name: nginx-default-conf
+        - name: var-run-volume
+          emptyDir: {}
+
+      containers:
+        - name: nginx
+          image: 185555976764.dkr.ecr.us-east-1.amazonaws.com/laravel-k83_nginx:latest
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: var-run-volume
+              mountPath: /var/run
+
+        - name: php
+          image: 185555976764.dkr.ecr.us-east-1.amazonaws.com/laravel-k83_php:latest
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          volumeMounts:
+            - name: var-run-volume
+              mountPath: /var/run
+
+  
