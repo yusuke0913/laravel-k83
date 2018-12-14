@@ -1,7 +1,0 @@
-
-# auto generated files by terraform
-# Please check eks.tf
-
-laravel-deployment.yaml
-update_ecr.sh
-

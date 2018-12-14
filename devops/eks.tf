@@ -22,13 +22,18 @@ resource "local_file" "config_map_aws_auth" {
   filename = "./deployment/eks/aws-auth/config_map_aws_auth_${var.app_name}.yaml"
 }
 
-data "template_file" "laravel_deployment_config" {
-  template = "${file("./deployment/eks/laravel/laravel-deployment-template.yaml")}"
+data "template_file" "frontend_laravel_deployment_config" {
+  template = "${file("./deployment/eks/frontend-laravel/template-frontend-laravel-deployment.yaml")}"
 
   vars {
-    ECR_REPOSITORY_NGINX_URL = "${aws_ecr_repository.nginx.repository_url}"
-    ECR_REPOSITORY_PHP_URL   = "${aws_ecr_repository.php.repository_url}"
+    ECR_REPOSITORY_FRONTEND_NGINX_URL = "${aws_ecr_repository.frontend_nginx.repository_url}"
+    ECR_REPOSITORY_FRONTEND_PHP_URL   = "${aws_ecr_repository.frontend_php.repository_url}"
   }
+}
+
+resource "local_file" "frontend_laravel_deployment_config" {
+  content  = "${data.template_file.frontend_laravel_deployment_config.rendered}"
+  filename = "./deployment/eks/frontend-laravel/frontend-laravel-deployment.yaml"
 }
 
 data "template_file" "api_laravel_deployment_config" {
