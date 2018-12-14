@@ -3,5 +3,4 @@
 # Please check eks.tf
 
 api-laravel-deployment.yaml
-update_api_ecr.sh
-
+update_api_laravel_ecr_sh.sh
