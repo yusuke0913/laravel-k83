@@ -4,7 +4,7 @@ RUN apk update
 RUN docker-php-ext-install pdo pdo_mysql opcache mbstring
 
 COPY ./docker.php/zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
-COPY ./proj /var/www/html
+COPY . /var/www/html
 
 RUN chown -R www-data:www-data /var/www/html/storage
 
