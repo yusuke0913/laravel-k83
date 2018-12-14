@@ -31,7 +31,16 @@ data "template_file" "laravel_deployment_config" {
   }
 }
 
-resource "local_file" "laravel_deployment_config" {
-  content  = "${data.template_file.laravel_deployment_config.rendered}"
-  filename = "./deployment/eks/laravel/laravel-deployment.yaml"
+data "template_file" "api_laravel_deployment_config" {
+  template = "${file("./deployment/eks/api-laravel/api-laravel-deployment-template.yaml")}"
+
+  vars {
+    ECR_REPOSITORY_API_NGINX_URL = "${aws_ecr_repository.api_nginx.repository_url}"
+    ECR_REPOSITORY_API_PHP_URL   = "${aws_ecr_repository.api_php.repository_url}"
+  }
+}
+
+resource "local_file" "api_laravel_deployment_config" {
+  content  = "${data.template_file.api_laravel_deployment_config.rendered}"
+  filename = "./deployment/eks/api-laravel/api-laravel-deployment.yaml"
 }

@@ -3,32 +3,40 @@ services:
   api-php:
     build:
       context: ./api-laravel
-      dockerfile: ./docker.api-php/Dockerfile.api-php
+      dockerfile: Dockerfile.api-php
     container_name: api-php
     volumes:
       - api-php-fpm-socket-volume:/var/run
     links:
-      - api-db
+      - db
     environment:
       - "DB_PORT=3306"
-      - "DB_HOST=api-db"
-
-  api-nginx:
-    build:
-      context: ./api-laravel
-      dockerfile: ./docker.api-nginx/Dockerfile.api-nginx
-    container_name: api-nginx
-    ports:
-      - "9000:80"
-    volumes:
-      - api-php-fpm-socket-volume:/var/run
+      - "DB_HOST=db"
 
   api-db:
     build:
       context: ./api-laravel
       dockerfile: ./docker.api-db/Dockerfile.api-db
-    env_file: ./api-laravel//docker.api-db/.env
+      env_file: ./docker.api-db/.env
+
+    # environment:
+    #   MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    #   MYSQL_DATABASE: ${MYSQL_DATABASE}
+    #   MYSQL_USER: ${MYSQL_USER}
+    #   MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     container_name: api-db
+    ports:
+      - "3306:3306"
+
+  api-nginx:
+    build:
+      context: ./api-laravel
+      dockerfile: ./docker/Dockerfile.api-nginx
+    container_name: api-nginx
+    ports:
+      - "9000:80"
+    volumes:
+      - api-php-fpm-socket-volume:/var/run
 
   php:
     build:
@@ -37,6 +45,9 @@ services:
     container_name: php
     volumes:
       - php-fpm-socket-volume:/var/run
+    environment:
+      - "DB_PORT=3306"
+      - "DB_HOST=db"
 
   nginx:
     build:
