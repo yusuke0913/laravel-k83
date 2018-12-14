@@ -30,19 +30,19 @@ services:
     env_file: ./api-laravel//docker.api-db/.env
     container_name: api-db
 
-  php:
+  frontend-php:
     build:
-      context: ./
-      dockerfile: Dockerfile.php
-    container_name: php
+      context: ./frontend-laravel
+      dockerfile: ./docker.php/Dockerfile.php
+    container_name: frontend-php
     volumes:
       - php-fpm-socket-volume:/var/run
 
-  nginx:
+  frontend-nginx:
     build:
-      context: ./
-      dockerfile: Dockerfile.nginx
-    container_name: nginx
+      context: ./frontend-laravel
+      dockerfile: ./docker.nginx/Dockerfile.nginx
+    container_name: frontend-nginx
     ports:
       - "8080:80"
     volumes:
