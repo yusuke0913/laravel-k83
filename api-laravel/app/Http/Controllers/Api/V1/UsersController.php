@@ -18,12 +18,10 @@ class UsersController extends Controller
     public function index(Request $request)
     {
         $users = User::all();
-        foreach ($users as $user) {
-            echo $user->id;
-        }
         return response()->json([
-                'Success' => true,
-                'Count' => count($users)
+            'Success' => true,
+            'Users' => $users,
+            'Count' => count($users)
         ]);
     }
 
@@ -43,5 +41,17 @@ class UsersController extends Controller
                 'created_at' => $user->created_at->getTimestamp(),
             ]
         );
+    }
+
+    /**
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+        return response()->json([
+                'Success' => true,
+        ]);
     }
 }

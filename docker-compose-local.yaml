@@ -1,0 +1,9 @@
+version: "3"
+services:
+  api-php:
+    volumes:
+      - ./api-laravel:/var/www/html
+
+  api-nginx:
+    volumes:
+      - ./api-laravel/docker.api-nginx/default.conf:/etc/nginx/conf.d/default.conf

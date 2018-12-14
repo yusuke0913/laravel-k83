@@ -1,0 +1,44 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: api-laravel
+  labels:
+    app: api-laravel
+spec:
+  selector:
+    matchLabels:
+      app: api-laravel
+      tier: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: api-laravel
+        tier: backend
+    spec:
+      volumes:
+        - name: var-run-volume
+          emptyDir: {}
+
+      containers:
+        - name: nginx
+          image: ${ECR_REPOSITORY_API_NGINX_URL}:latest
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: var-run-volume
+              mountPath: /var/run
+
+        - name: php
+          image: ${ECR_REPOSITORY_API_PHP_URL}:latest
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          volumeMounts:
+            - name: var-run-volume
+              mountPath: /var/run

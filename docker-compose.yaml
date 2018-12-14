@@ -7,7 +7,6 @@ services:
     container_name: api-php
     volumes:
       - api-php-fpm-socket-volume:/var/run
-      - ./api-laravel:/var/www/html
     links:
       - api-db
     environment:
@@ -30,11 +29,6 @@ services:
       dockerfile: ./docker.api-db/Dockerfile.api-db
     env_file: ./api-laravel//docker.api-db/.env
     container_name: api-db
-    # environment:
-    #   MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-    #   MYSQL_DATABASE: ${MYSQL_DATABASE}
-    #   MYSQL_USER: ${MYSQL_USER}
-    #   MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
   php:
     build:
